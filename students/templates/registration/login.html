@@ -1,0 +1,84 @@
+{% extends 'students/base.html' %}
+
+{% block title %}Login - Student MS{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="col-md-5 col-lg-4">
+        <!-- Login Card -->
+        <div class="card shadow-lg border-0 rounded-4">
+            <div class="card-header bg-primary text-white text-center py-4 rounded-top-4">
+                <h3 class="mb-0 fw-bold">🎓 Student MS</h3>
+                <p class="mb-0 opacity-75">Please sign in to continue</p>
+            </div>
+            
+            <div class="card-body p-4 p-md-5">
+                <!-- Error Message -->
+                {% if form.errors %}
+                <div class="alert alert-danger d-flex align-items-center" role="alert">
+                    <span class="me-2">⚠️</span>
+                    <div>
+                        Invalid username or password.
+                    </div>
+                </div>
+                {% endif %}
+
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <!-- Username Field -->
+                    <div class="mb-3">
+                        <label for="id_username" class="form-label fw-semibold">Email Address</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="bi bi-person"></i>👤</span>
+                            <input type="email" name="username" class="form-control" id="id_username" placeholder="Enter username" required autofocus>
+                        </div>
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="mb-4">
+                        <label for="id_password" class="form-label fw-semibold">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="bi bi-lock"></i>🔒</span>
+                            <input type="password" name="password" class="form-control" id="id_password" placeholder="Enter password" required>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg fw-bold shadow-sm">
+                            Login Now
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="card-footer bg-light text-center py-3 text-muted small">
+                &copy; 2026 Student Management System &bull; Secure Portal
+            </div>
+        </div>
+        
+        <!-- Helper link for the admin -->
+        <div class="text-center mt-4">
+            <a href="/admin/" class="text-decoration-none text-muted small">Go to Super-Admin Panel</a>
+        </div>
+    </div>
+</div>
+
+<!-- Custom CSS to make the login page pop -->
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+    .card {
+        transition: transform 0.3s ease;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    .form-control:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+    }
+</style>
+{% endblock %}

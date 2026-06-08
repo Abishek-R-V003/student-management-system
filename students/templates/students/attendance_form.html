@@ -1,0 +1,29 @@
+{% extends 'students/base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow border-0">
+            <div class="card-header bg-info text-dark">
+                <h4 class="mb-0">Record Attendance</h4>
+            </div>
+            <div class="card-body p-4">
+                <form method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">{{ field.label }}</label>
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-info w-100 text-white">Save Attendance</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    input, select, textarea { display: block; width: 100%; padding: 0.375rem 0.75rem; border: 1px solid #dee2e6; border-radius: 0.375rem; }
+</style>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'students/base.html' %}
+
+{% block title %}Verify OTP - Student MS{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center align-items-center" style="min-height: 70vh;">
+    <div class="col-md-5 col-lg-4">
+        <div class="card shadow-lg border-0 rounded-4">
+            <div class="card-header bg-success text-white text-center py-4 rounded-top-4">
+                <h3 class="mb-0 fw-bold">Verify Identity</h3>
+                <p class="mb-0 opacity-75">Enter the 6-digit secure code</p>
+            </div>
+            
+            <div class="card-body p-4 p-md-5">
+                <!-- Display Django Messages (Error/Success) -->
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-4 text-center">
+                        <label class="form-label fw-semibold d-block mb-3">Enter OTP</label>
+                        <input type="text" name="otp" class="form-control text-center" 
+                               style="font-size: 28px; letter-spacing: 8px; font-weight: bold;" 
+                               maxlength="6" required autofocus placeholder="000000">
+                        <div class="form-text mt-2">The code was sent to your registered email.</div>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success btn-lg fw-bold shadow-sm">
+                            Verify & Login 🚀
+                        </button>
+                        <a href="{% url 'login_request_otp' %}" class="btn btn-link text-muted btn-sm">Resend OTP</a>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="card-footer bg-light text-center py-3 text-muted small">
+                Secure Authentication Portal
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

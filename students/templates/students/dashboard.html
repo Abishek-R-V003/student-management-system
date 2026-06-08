@@ -1,0 +1,111 @@
+{% extends 'students/base.html' %}
+
+{% block title %}Dashboard - Student MS{% endblock %}
+
+{% block content %}
+<!-- Stats KPI Cards (Now at the top) -->
+<div class="row g-4 mb-5">
+    <div class="col-md-3">
+        <div class="card shadow-sm h-100 border-start border-primary border-5">
+            <div class="card-body p-4 text-center">
+                <div class="text-muted small text-uppercase fw-bold mb-2">Total Students</div>
+                <h2 class="display-6 fw-bold mb-0">{{ total_students }}</h2>
+                <div class="mt-3 text-primary small">Registered Profiles</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm h-100 border-start border-success border-5">
+            <div class="card-body p-4 text-center">
+                <div class="text-muted small text-uppercase fw-bold mb-2">Active Now</div>
+                <h2 class="display-6 fw-bold mb-0">{{ active_students }}</h2>
+                <div class="mt-3 text-success small">Currently Enrolled</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm h-100 border-start border-info border-5">
+            <div class="card-body p-4 text-center">
+                <div class="text-muted small text-uppercase fw-bold mb-2">Courses</div>
+                <h2 class="display-6 fw-bold mb-0">{{ total_courses }}</h2>
+                <div class="mt-3 text-info small">Academic Offerings</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm h-100 border-start border-warning border-5">
+            <div class="card-body p-4 text-center">
+                <div class="text-muted small text-uppercase fw-bold mb-2">Enrollments</div>
+                <h2 class="display-6 fw-bold mb-0">{{ total_enrollments }}</h2>
+                <div class="mt-3 text-warning small">Active Course Seats</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Recent Admissions Table -->
+    <div class="col-lg-8">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold text-dark">Recent Admissions</h5>
+                <a href="{% url 'student_list' %}" class="btn btn-sm btn-outline-primary">View All</a>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr class="text-muted">
+                                <th class="ps-4">ID</th>
+                                <th>Full Name</th>
+                                <th>Department</th>
+                                <th class="text-end pe-4">Admission Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for s in recent_students %}
+                            <tr>
+                                <td class="ps-4 fw-semibold">{{ s.student_id }}</td>
+                                <td>{{ s.full_name }}</td>
+                                <td><span class="badge bg-light text-dark border">{{ s.department }}</span></td>
+                                <td class="text-end pe-4 text-muted">{{ s.admission_date }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr class="text-center py-4">
+                                <td colspan="4" class="text-muted">No recent students found.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Department Stats -->
+    <div class="col-lg-4">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-header bg-white py-3">
+                <h5 class="mb-0 fw-bold text-dark">Departments</h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group list-group-flush">
+                    {% for dept in departments %}
+                    <div class="list-group-item d-flex justify-content-between align-items-center py-3 border-0">
+                        <div class="d-flex align-items-center">
+                            <div class="me-3 bg-primary-subtle text-primary rounded-circle p-2" style="width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                                {{ dept.code|slice:":1" }}
+                            </div>
+                            <span class="fw-medium">{{ dept.name }}</span>
+                        </div>
+                        <span class="badge bg-primary rounded-pill">{{ dept.student_count }} Students</span>
+                    </div>
+                    {% empty %}
+                    <p class="text-muted text-center py-3">No departments registered.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
